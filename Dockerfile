@@ -5,7 +5,7 @@ ENV SHOPIFY_API_SECRET=4a95b07883b6297b2eb992e0a255ad81
 ENV SHOPIFY_JELLISTUDIO_ADDON_WEB_PIXEL_ID=30fd9d96-31cc-4a94-a383-bcdf575ad0fc
 ENV PORT=8081
 ENV HOST=https://shopify-testing-d4bl.onrender.com
-ENV SCOPES=["write_products"]
+ENV SCOPES="write_products, read_products"
 EXPOSE 8081
 WORKDIR /app
 COPY web .
