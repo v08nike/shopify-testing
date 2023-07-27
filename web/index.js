@@ -115,8 +115,8 @@ const fetchAndSaveData = async () => {
 };
 
 const testingSession = async () => {
-  const data = await fetchAndSaveData();
-  console.log(data);
+  const sessions = await loadAllSessions();
+  console.log(sessions);
 }
 
 const startInerval = () => {
