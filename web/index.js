@@ -114,6 +114,7 @@ const fetchAndSaveData = async () => {
   }
 };
 
+
 const testingSession = async () => {
   const sessions = await loadAllSessions();
   console.log(sessions);
@@ -132,6 +133,11 @@ const startInerval = () => {
 }
 
 startInerval();
+
+app.get("/products/save", async (_req, res) => {
+  fetchAndSaveData();
+  res.status(200).send({ success: true });
+})
 
 app.get("/api/products/save", async (_req, res) => {
   const session = res.locals.shopify.session;
