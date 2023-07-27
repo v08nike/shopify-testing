@@ -132,8 +132,6 @@ const startInerval = () => {
   });
 }
 
-startInerval();
-
 app.get("/products/save", async (_req, res) => {
   fetchAndSaveData();
   res.status(200).send({ success: true });
