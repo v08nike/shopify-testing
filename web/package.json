@@ -17,7 +17,16 @@
     "@shopify/shopify-app-session-storage-sqlite": "^1.2.3",
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
-    "serve-static": "^1.14.1"
+    "serve-static": "^1.14.1",
+    "@aws-sdk/client-s3": "^3.374.0",
+    "@shopify/app": "3.47.5",
+    "@shopify/cli": "3.47.5",
+    "@shopify/koa-shopify-auth": "^5.0.3",
+    "aws-sdk": "^2.1419.0",
+    "moment": "^2.29.4",
+    "node-cron": "^3.0.2",
+    "sqlite": "^5.0.1",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "nodemon": "^2.0.15",

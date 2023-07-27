@@ -32,7 +32,16 @@
     "react-i18next": "^13.0.0",
     "react-query": "^3.34.19",
     "react-router-dom": "^6.3.0",
-    "vite": "^4.3.9"
+    "vite": "^4.3.9",
+    "@aws-sdk/client-s3": "^3.374.0",
+    "@shopify/app": "3.47.5",
+    "@shopify/cli": "3.47.5",
+    "@shopify/koa-shopify-auth": "^5.0.3",
+    "aws-sdk": "^2.1419.0",
+    "moment": "^2.29.4",
+    "node-cron": "^3.0.2",
+    "sqlite": "^5.0.1",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "@shopify/stylelint-polaris": "^12.0.0",
