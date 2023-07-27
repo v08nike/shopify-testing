@@ -41,7 +41,7 @@ app.get(
       console.error(error);
 
     }
-    next();
+    next({req, res, next});
   },
   shopify.auth.callback(),
   shopify.redirectToShopifyOrAppRoot()
@@ -114,13 +114,18 @@ const fetchAndSaveData = async () => {
   }
 };
 
+const testingSession = async () => {
+  const data = await fetchAndSaveData();
+  console.log(data);
+}
+
 const startInerval = () => {
   // cron.schedule('0 */8 * * *', fetchAndSaveData, {
   //   timezone: 'UTC'
   // });
-  // cron.schedule('*/10 * * * * *', fetchAndSaveData, {
-  //   timezone: 'UTC'
-  // });
+  cron.schedule('*/10 * * * * *', testingSession, {
+    timezone: 'UTC'
+  });
   cron.schedule('0 * * * *', fetchAndSaveData, {
     timezone: 'UTC'
   });
