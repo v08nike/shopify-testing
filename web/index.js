@@ -8,7 +8,7 @@ import shopify from "./shopify.js";
 import GDPRWebhookHandlers from "./gdpr.js";
 import cron from "node-cron";
 import { saveData } from "./save-data.js";
-import { Session } from '@shopify/shopify-api';
+import { Session } from "@shopify/shopify-api";
 import moment from "moment";
 import { loadAllSessions } from "./load-session.js";
 
@@ -36,9 +36,9 @@ app.get(
       });
 
       const session = callbackResponse.session.toObject();
-      shopify.config.sessionStorage.storeSession(new Session(session))
+      shopify.config.sessionStorage.storeSession(new Session(session));
     } catch (error) {
-      console.error(error);
+      console.error(shopify.config.auth.callbackPath, " : ", error);
       next(error);
       return;
     }
@@ -62,7 +62,7 @@ app.use(express.json());
 
 const fetchAndSaveData = async () => {
   try {
-    const currentDate = moment().format('YYYYMMDD');
+    const currentDate = moment().format("YYYYMMDD");
     const currentTimestamp = moment().valueOf();
     const sessions = await loadAllSessions();
     if (sessions.length) {
@@ -75,7 +75,7 @@ const fetchAndSaveData = async () => {
             const response = await shopify.api.rest.Product.all({
               session,
               limit: 250,
-              page_info: pageInfo
+              page_info: pageInfo,
             });
             products = products.concat(response.data);
             pageInfo = response.pageInfo?.nextPage?.query?.page_info;
@@ -91,7 +91,7 @@ const fetchAndSaveData = async () => {
               const response = await shopify.api.rest.Customer.all({
                 session,
                 limit: 250,
-                page_info: customerPageInfo
+                page_info: customerPageInfo,
               });
               customers = customers.concat(response.data);
               customerPageInfo = response.pageInfo?.nextPage?.query?.page_info;
@@ -99,12 +99,17 @@ const fetchAndSaveData = async () => {
                 break;
               }
             }
-
           } catch (e) {
-            console.log("Don't have customer data access!")
+            console.log("Don't have customer data access!");
           }
 
-          await saveData(products, customers, session.shop, currentDate, currentTimestamp);
+          await saveData(
+            products,
+            customers,
+            session.shop,
+            currentDate,
+            currentTimestamp
+          );
         }
       }
     }
@@ -120,15 +125,15 @@ app.get("/products/save", async (_req, res) => {
     fetchAndSaveData();
     res.status(200).send({ success: true });
   } catch (error) {
-    res.status(500).send({ error });  
+    res.status(500).send({ error });
   }
-})
+});
 
 app.get("/api/saveSession", async (_req, res) => {
   const session = res.locals.shopify.session;
   shopify.config.sessionStorage.storeSession(new Session(session));
   res.status(200).send({ success: true });
-})
+});
 
 app.use(shopify.cspHeaders());
 app.use(serveStatic(STATIC_PATH, { index: false }));
