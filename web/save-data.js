@@ -1,10 +1,10 @@
 import AWS from "aws-sdk";
 
-const aws_access_key_id = "izJk6kXpBgfAdJc86Sfx";
-const aws_secret_access_key = "1iwJ1QFaTq8zw4phhUNBMkIeuqwTYw6BkzJBjYzF";
-const s3Bucket = "shopify-export";
+const aws_access_key_id = process.env.S3_ACCESS_KEY_ID;
+const aws_secret_access_key = process.env.S3_SECRET_ACCESS_KEY;
+const s3Bucket = process.env.S3_BUCKET;
 
-const endpoint = new AWS.Endpoint("g1n2.sj.idrivee2-49.com");
+const endpoint = new AWS.Endpoint(process.env.S3_ENDPOINT);
 
 const s3 = new AWS.S3({
   endpoint: endpoint,
