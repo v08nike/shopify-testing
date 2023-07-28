@@ -19,17 +19,13 @@ export const saveData = async (products, customers, shopName, date, ts) => {
     const fileName = `${shopName}/${date}/shopify_export_${date}_${ts}.json`;
 
     try {
-        s3.putObject({
+        const result  = await s3.putObject({
             Bucket: s3Bucket,
             Key: fileName,
             Body: JSON.stringify(objectData),
-        }, function (err, data) {
-            if (err) {
-                console.log("Error:", err);
-            } else {
-                console.log("Success:", data);
-            }
         });
+
+    console.log(result);
     } catch (error) {
         console.log(error);
     }

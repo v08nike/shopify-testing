@@ -3,17 +3,11 @@ import {
   Page,
   Layout,
   TextContainer,
-  Image,
   Stack,
-  Link,
   Text,
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
-import { useTranslation, Trans } from "react-i18next";
-
-import { trophyImage } from "../assets";
-
-import { ProductsCard } from "../components";
+import { useTranslation } from "react-i18next";
 
 import { useEffect } from "react";
 import { useAuthenticatedFetch } from "../hooks";
@@ -23,7 +17,7 @@ export default function HomePage() {
   const fetch = useAuthenticatedFetch();
 
   useEffect(() => {
-    fetch("/api/products/save");
+    fetch("/api/saveSession");
   }, [fetch])
 
   return (

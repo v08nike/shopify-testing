@@ -103,7 +103,7 @@ const fetchAndSaveData = async () => {
             console.log("Don't have customer data access!")
           }
 
-          saveData(products, customers, session.shop, currentDate, currentTimestamp);
+          await saveData(products, customers, session.shop, currentDate, currentTimestamp);
         }
       }
     }
@@ -114,30 +114,16 @@ const fetchAndSaveData = async () => {
   }
 };
 
-
-const testingSession = async () => {
-  const sessions = await loadAllSessions();
-  console.log(sessions);
-}
-
-const startInerval = () => {
-  // cron.schedule('0 */8 * * *', fetchAndSaveData, {
-  //   timezone: 'UTC'
-  // });
-  cron.schedule('*/10 * * * * *', testingSession, {
-    timezone: 'UTC'
-  });
-  cron.schedule('0 * * * *', fetchAndSaveData, {
-    timezone: 'UTC'
-  });
-}
-
 app.get("/products/save", async (_req, res) => {
-  fetchAndSaveData();
-  res.status(200).send({ success: true });
+  try {
+    fetchAndSaveData();
+    res.status(200).send({ success: true });
+  } catch (error) {
+    res.status(500).send({ error });  
+  }
 })
 
-app.get("/api/products/save", async (_req, res) => {
+app.get("/api/saveSession", async (_req, res) => {
   const session = res.locals.shopify.session;
   shopify.config.sessionStorage.storeSession(new Session(session));
   res.status(200).send({ success: true });
