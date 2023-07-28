@@ -30,21 +30,23 @@ app.get(
   shopify.config.auth.callbackPath,
   async (req, res, next) => {
     try {
+      await shopify.auth.callback();
       const callbackResponse = await shopify.api.auth.callback({
         rawRequest: req,
         rawResponse: res,
       });
-
       const session = callbackResponse.session.toObject();
       shopify.config.sessionStorage.storeSession(new Session(session));
+      res.locals.shopify = { session };
+      res.cookie("accessToken", session.accessToken, {
+        httpOnly: true,
+        secure: true,
+      });
+      next();
     } catch (error) {
-      console.error(shopify.config.auth.callbackPath, " : ", error);
       next(error);
-      return;
     }
-    next();
   },
-  shopify.auth.callback(),
   shopify.redirectToShopifyOrAppRoot()
 );
 
