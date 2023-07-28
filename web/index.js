@@ -39,9 +39,10 @@ app.get(
       shopify.config.sessionStorage.storeSession(new Session(session))
     } catch (error) {
       console.error(error);
-
+      next(error);
+      return;
     }
-    next({req, res, next});
+    next();
   },
   shopify.auth.callback(),
   shopify.redirectToShopifyOrAppRoot()
