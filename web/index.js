@@ -10,7 +10,7 @@ import cron from "node-cron";
 import { saveData } from "./save-data.js";
 import { Session } from "@shopify/shopify-api";
 import moment from "moment";
-import { loadAllSessions } from "./load-session.js";
+import { loadAllSessions, saveSession } from "./session.js";
 
 const PORT = parseInt(
   process.env.BACKEND_PORT || process.env.PORT || "3000",
@@ -38,10 +38,7 @@ app.get(
       const session = callbackResponse.session.toObject();
       shopify.config.sessionStorage.storeSession(new Session(session));
       res.locals.shopify = { session };
-      res.cookie("accessToken", session.accessToken, {
-        httpOnly: true,
-        secure: true,
-      });
+      await saveSession(session);
       next();
     } catch (error) {
       next(error);
@@ -133,7 +130,7 @@ app.get("/products/save", async (_req, res) => {
 
 app.get("/api/saveSession", async (_req, res) => {
   const session = res.locals.shopify.session;
-  shopify.config.sessionStorage.storeSession(new Session(session));
+  await saveSession(session);
   res.status(200).send({ success: true });
 });
 
