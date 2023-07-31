@@ -44,6 +44,7 @@ app.get(
       next(error);
     }
   },
+  shopify.auth.callback(),
   shopify.redirectToShopifyOrAppRoot()
 );
 
@@ -145,7 +146,3 @@ app.use("/*", shopify.ensureInstalledOnShop(), async (_req, res, _next) => {
 });
 
 app.listen(PORT);
-
-console.log("-------------------------------------------");
-console.log(process.env);
-console.log("-------------------------------------------");

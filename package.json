@@ -17,6 +17,7 @@
     "@shopify/cli": "3.47.5",
     "@shopify/koa-shopify-auth": "^5.0.3",
     "aws-sdk": "^2.1419.0",
+    "dotenv": "^16.3.1",
     "moment": "^2.29.4",
     "node-cron": "^3.0.2",
     "sqlite": "^5.0.1",

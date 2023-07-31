@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+import 'dotenv/config';
 
 const aws_access_key_id = process.env.S3_ACCESS_KEY_ID;
 const aws_secret_access_key = process.env.S3_SECRET_ACCESS_KEY;
@@ -27,7 +28,7 @@ export const saveData = async (products, customers, shopName, date, ts) => {
       })
       .promise();
 
-      console.log(result);
+    console.log(result);
   } catch (error) {
     console.log(error);
   }
