@@ -24,10 +24,14 @@ WORKDIR /app
 COPY web .
 RUN npm install
 
-
 WORKDIR /app/frontend
 RUN npm install 
-RUN REACT_APP_SHOPIFY_API_KEY=$SHOPIFY_API_KEY HOST=$HOST npm run build
+
+RUN apk add --no-cache gettext
+COPY .env.template .env
+RUN envsubst < .env > .env.production
+
+RUN npm run build
 
 WORKDIR /app
 CMD ["npm", "run", "serve"]
