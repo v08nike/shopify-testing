@@ -18,11 +18,18 @@ ENV SHOPIFY_API_KEY=$SHOPIFY_API_KEY \
     S3_ACCESS_KEY_ID=$S3_ACCESS_KEY_ID \
     S3_SECRET_ACCESS_KEY=$S3_SECRET_ACCESS_KEY \
     S3_ENDPOINT=$S3_ENDPOINT \
-    S3_BUCKET=$S3_BUCKET
+    S3_BUCKET=$S3_BUCKET \
+    REACT_APP_SHOPIFY_API_KEY=$SHOPIFY_API_KEY
 
 EXPOSE 8081
 WORKDIR /app
 COPY web .
 RUN npm install
-RUN cd frontend && npm install && npm run build
+
+
+WORKDIR /app/frontend
+RUN npm install 
+RUN RUN REACT_APP_SHOPIFY_API_KEY=$SHOPIFY_API_KEY HOST=$HOST npm run build
+
+WORKDIR /app
 CMD ["npm", "run", "serve"]
